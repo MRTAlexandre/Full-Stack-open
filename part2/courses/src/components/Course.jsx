@@ -1,9 +1,12 @@
+import Part from "./Part";
+
 const Course = ({course}) =>{
 
   const total = course.parts.reduce((sum, part) => {
     sum = sum + part.exercises
     return sum
-  }, 0)
+  }, 0);
+  
   return(
     <>
       <header>
@@ -12,7 +15,7 @@ const Course = ({course}) =>{
       <dl>
         {course.parts.map(part => {
           return (
-            <li key={part.id}> {part.name} {part.exercises}</li>
+            <Part key={part.id} part={part} />
           )
         })}
       </dl>
