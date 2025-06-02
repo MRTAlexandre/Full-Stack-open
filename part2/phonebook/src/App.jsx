@@ -8,14 +8,21 @@ const App = () => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    const name = {name: newName}
-    setPersons([...persons, name]);
+    if (isNameDuplicated(newName)) {
+      return alert(`${newName} is already added to the phonebook`)
+    }
+    const nameObject = {name: newName}
+    setPersons([...persons, nameObject]);
     setNewName("")
   }
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
     event.preventDefault();
+  }
+
+  const isNameDuplicated = (name) => {
+    return persons.find(person => person.name === name)
   }
 
   return (
