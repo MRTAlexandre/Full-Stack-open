@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Filter from './components/Filter'
 import Persons from './components/Persons'
+import PersonForm from './components/PersonForm'
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -25,19 +26,9 @@ const App = () => {
     setNewNumber("")
   }
 
-  const handleNameChange = (event) => {
-    setNewName(event.target.value)
+  const handleStateChange = (event, newState) => {
+    newState(event.target.value)
     event.preventDefault();
-  }
-
-   const handleNumberChange = (event) => {
-    setNewNumber(event.target.value)
-    event.preventDefault();
-  }
-
-  const handleFilterChange = (event) => {
-    setFilter(event.target.value)
-    event.preventDefault()
   }
 
   const isNameDuplicated = (name) => {
@@ -47,27 +38,16 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Filter filter={filter} setFilter={handleFilterChange} />
-      <h2>Phonebook</h2>
-      <form onSubmit={handleFormSubmit}>
-        <div>
-          name:
-          <input
-            value={newName}
-            onChange={handleNameChange}
-          />
-        </div>
-        <div>
-          number:
-          <input
-            value={newNumber}
-            onChange={handleNumberChange}
-          />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <Filter filter={filter} setFilter={event => handleStateChange(event, setFilter)} />
+      <h2>Add a new</h2>
+      <PersonForm
+        handleStateChange={handleStateChange}
+        submitFormFunction={handleFormSubmit}
+        setNewName={setNewName}
+        nameValue={newName}
+        setNewNumber={setNewNumber}
+        numberValue={newNumber}
+      />
       <h3>Numbers</h3>
       <Persons persons={filteredList} />
     </div>
